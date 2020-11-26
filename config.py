@@ -1,9 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+import paho.mqtt.client as mqtt
 
-# from webapp import config
-# todo: admin localhost i ostalo stavit u config.py
-DATABASE_URI = 'postgres+psycopg2://postgres:admin@localhost:5432/zavrsni'
+client = mqtt.Client()
 
-engine = create_engine(DATABASE_URI, echo=True)
-Session = sessionmaker(bind=engine)
+
+# todo: ovo staviti preko global varijabli
+class Config:
+    # psql_ip = "172.105.76.166"
+    psql_ip = "localhost"
+    psql_port = "1883"
+    psql_user = "admin"
+    psql_db_name = "zavrsni"
