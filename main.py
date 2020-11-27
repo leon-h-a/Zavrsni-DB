@@ -1,33 +1,28 @@
 from config import client
-from session_generator import Session
-# from topics.uC_init import uc_initialisation
+from clients.microcontrollers import initialisation
+from clients.microcontrollers import MQTT_ACTIVE_CLIENTS
+from models import Base
+from database.session_generator import engine
+
+
+""" General functions """
+# Base.metadata.drop_all(engine)
+Base.metadata.create_all(engine)
+
 
 # todo: add timestamps in embedded
-
-
-def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+def broker_info(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
     # client.subscribe("$SYS/#")
 
 
-def on_message(client, userdata, msg):
-    print(msg.payload)
-
-
-def uc_initialisation(mosq, obj, msg):
-    print("MESSAGES: " + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-
-
-client.on_connect = on_connect
-client.message_callback_add("init", uc_initialisation)
-client.on_message = on_message
+client.on_connect = broker_info
+client.message_callback_add("init", initialisation)
 
 client.connect("172.105.76.166", 1883, 60)
 
-MQTT_TOPIC = [("init", 0), ("a", 0)]
-
-client.subscribe(MQTT_TOPIC)
+client.subscribe(MQTT_ACTIVE_CLIENTS)
 client.loop_forever()
 
 # if __name__ == '__main__':
-    # client.loop_forever()
+# client.loop_forever()

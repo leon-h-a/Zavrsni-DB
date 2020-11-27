@@ -7,6 +7,8 @@ client = mqtt.Client()
 class Config:
     # psql_ip = "172.105.76.166"
     psql_ip = "localhost"
-    psql_port = "1883"
-    psql_user = "admin"
+    psql_port = "5432"
+    psql_user = "postgres"
+    # psql_user = "zavrsni_admin"
+    # psql_user = "zavrsni_client"
     psql_db_name = "zavrsni"
