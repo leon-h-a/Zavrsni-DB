@@ -1,6 +1,7 @@
 from config import Config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from contextlib import contextmanager
 
 # from webapp import config
 # todo: admin localhost i ostalo stavit u config.py
@@ -8,3 +9,16 @@ DATABASE_URI = 'postgres+psycopg2://' + Config.psql_user + ':' + Config.psql_pas
 
 engine = create_engine(DATABASE_URI, echo=True)
 Session = sessionmaker(bind=engine)
+
+
+@contextmanager
+def session_scope():
+    session = Session()
+    try:
+        yield session
+        session.commit()
+    except Exception:
+        session.rollback()
+        raise
+    finally:
+        session.close()

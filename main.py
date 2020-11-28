@@ -6,7 +6,7 @@ from database.session_generator import engine
 
 
 """ General functions """
-# Base.metadata.drop_all(engine)
+Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
 
