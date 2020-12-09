@@ -12,5 +12,5 @@ class Config:
     PSQL_HOST = config.get("PSQL_HOST")
     PSQL_PORT = config.get("PSQL_PORT")
     PSQL_USER = config.get("PSQL_USER")
-    PSQL_PASSWORD = config.get("PSQL_PASS")
+    PSQL_PASSWORD = config.get("PSQL_PASSWORD")
     PSQL_DATABASE = config.get("PSQL_DATABASE")
