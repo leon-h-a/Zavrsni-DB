@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 # from webapp import config
 # todo: admin localhost i ostalo stavit u config.py
-DATABASE_URI = 'postgres+psycopg2://' + Config.psql_user + ':' + Config.psql_pass + '@' + Config.psql_ip + ':' + Config.psql_port + '/' + Config.psql_db_name
+DATABASE_URI = 'postgres+psycopg2://' + Config.PSQL_USER + ':' + Config.PSQL_PASSWORD + '@' + Config.PSQL_HOST + ':' + Config.PSQL_PORT + '/' + Config.PSQL_DATABASE
 
 engine = create_engine(DATABASE_URI, echo=True)
 Session = sessionmaker(bind=engine)
