@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, Float
-from models import Base
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy import ForeignKey
+from models import Base
 
 
 class Microcontroller(Base):

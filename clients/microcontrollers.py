@@ -1,6 +1,7 @@
 from database.session_generator import session_scope
 from models.microcontrollers import Microcontroller, Pin
 from sqlalchemy.orm import exc
+import json
 
 MQTT_ACTIVE_CLIENTS = [("init", 0), ("command_confirm", 0)]
 
@@ -34,7 +35,12 @@ def initialisation(client, userdata, msg):
 
 
 def command_confirm(client, userdata, msg):
-    msg.payload.decode('UTF-8')
-    print(msg.payload.decode('UTF-8'))
-    # with session_scope() as s:
-    #     terget_pin = s.query(Pin).filter_by(mac_address=msg.payload.decode('UTF-8')).one()
+    json_obj = json.loads(msg.payload.decode('UTF-8'))
+    changed_pin = list(json_obj.keys())[1]
+    with session_scope() as s:
+        microcontroller = s.query(Microcontroller).filter_by(mac_address="esp8266-80:7d:3a:7d:59:52").one()
+        for pin in microcontroller.pins:
+            if pin.embeded_pin_name == changed_pin:
+                pin.current_value = json_obj[changed_pin]
+                s.add(pin)
+                s.commit()
